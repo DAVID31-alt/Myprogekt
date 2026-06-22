@@ -1,7 +1,45 @@
-package main
+package payments
 
-import "fmt"
+type paymentsMethod interface{
 
-func main() {
-	fmt.Println("привеn")
+	pay(usd int)int
+    cancell(id int)
 }
+
+type Paymentst struct{
+
+paymentsStruct   PaymentsStruct
+
+}
+func NewpaymentModul(   paymentsmethod  paymentsMethod )*PaymentModul{
+	return &PaymentModul{
+paymentsmethod:paymentsmethod,
+
+
+}
+}
+
+
+
+
+
+func ( p PaymentModul) Pay(destriction string,usd int)int {
+
+id:=paymentsModul.Pay(usd)int
+
+
+info:=Destriction  desrtiction
+      usd          Usd
+	  cancell      false
+
+}
+
+
+
+
+
+func (p PaymentModul) Cancell(){}
+
+func (p PaymentModul) Info(){}
+
+func (p PaymentModul) Allinfo(){}

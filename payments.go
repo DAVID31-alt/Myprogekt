@@ -2,17 +2,22 @@ package payments
 
 type paymentsMethod interface{
 
+
+
+
 	pay(usd int)int
     cancell(id int)
 }
 
-type Paymentst struct{
 
-paymentsStruct   PaymentsStruct
+p.paymentsInfo map[int]PaymentInfo
 
-}
+
+paymentsmethod paymentsMethod
+
 func NewpaymentModul(   paymentsmethod  paymentsMethod )*PaymentModul{
 	return &PaymentModul{
+		paymentsInfo make(map[int]PaymentInfo ,)
 paymentsmethod:paymentsmethod,
 
 
@@ -25,21 +30,42 @@ paymentsmethod:paymentsmethod,
 
 func ( p PaymentModul) Pay(destriction string,usd int)int {
 
-id:=paymentsModul.Pay(usd)int
+id:=p.paymentsMethod.Pay(usd)
+}
 
-
-info:=Destriction  desrtiction
+info:=PaymentInfo{
+      Destriction  desrtiction
       usd          Usd
-	  cancell      false
+	  cancelled      false
 
 }
 
+p.paymentsInfo[id]=info
+return id
 
 
 
+func (p PaymentModul) Cancell(id int){
+info,ok:=p.paymetsInfo[id]
 
-func (p PaymentModul) Cancell(){}
+if !ok{
+	return
+}
 
-func (p PaymentModul) Info(){}
+p.paymentsMethod.cancell(id)
+info.cancelled=true
+p.paymentsInfo[id]=info
+}
 
-func (p PaymentModul) Allinfo(){}
+
+func (p PaymentModul) Info(id int){}
+
+info,ok:=p.paymentsInfo[id]
+if !ok{
+return paymentsInfo{}
+}
+
+
+func (p PaymentModul) Allinfo map[int]PaymentsInfo{
+	return p.paymentsInfo
+}

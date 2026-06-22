@@ -1,6 +1,6 @@
 package payments
 
-type paymentsInfo struct {
+type PaymentInfo struct {
 	Destring string
 	usd      int
 	cancell  bool

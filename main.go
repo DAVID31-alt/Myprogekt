@@ -1,98 +1,72 @@
 package main
 
-type PaymentsMethod interface {
-	pay(usd int) int
+import "fmt"
 
-	cancell(id int)
+// 1. Интерфейс рынка (правила для внешнего магазина)
+type garagemethod interface {
+	buy(usd int) int
+	sell(model string) int
 }
 
-type PaymentsModul struct{
-
-
- 
-infomap	map[int]paymentsInfo
-
-paymentsMethod: PaymentsMethod
+// 2. Структура машины
+type car struct {
+	destriction string
+	price       int
+	status      bool
 }
 
+// 3. Главная структура Тюнинг-Клуба
+type garageModul struct {
+	mapinfo map[int]car
+	nextID  int
+	market  garagemethod
+}
 
-
-
-
-
-func newPAymentsModul(paymentsMethod PaymentsMethod) *PaymentsModul {
-	return &PaymentsModul{
-PaymentsInfo:=make(map[int]paymentsInfo, )
-		paymentsMethod: paymentsMethod,
+// 4. Функция-конструктор для включения гаража
+func NewGargeModul(market garagemethod) *garageModul {
+	return &garageModul{
+		mapinfo: make(map[int]car),
+		market:  market,
+		nextID:  1,
 	}
 }
 
-func (p PaymentsModul) pay(Description string, usd int) int {
-	id := p.PaymentsMethod.pay(usd)
+// 5. Метод покупки машины в клуб
+func (g *garageModul) buy(destriction string, usd int) int {
+	_ = g.market.buy(usd) // Симулируем покупку на внешнем рынке
 
-	info := paymentsInfo{
-		Description: description,
+	myCarID := g.nextID
+	g.nextID++
 
-		Usd:         usd,
-
-		cancell:     false,
+	newCar := car{
+		destriction: destriction,
+		price:       usd,
+		status:      false,
 	}
-}
- 
 
-p.infomap[id]=info{
-
-	return id
+	g.mapinfo[myCarID] = newCar
+	return myCarID
 }
 
-type paymentsInfo struct {
-	Description string
+// 6. Метод продажи машины и удаления её из клуба
+func (g *garageModul) sell(id int) int {
+	mycar := g.mapinfo[id]
+	money := g.market.sell(mycar.destriction)
 
-	Usd int
-
-	cancell boll
+	delete(g.mapinfo, id)
+	return money
 }
 
-func (p PaymentsModul) cancell(id int) {}
-
-info,ok:=p.paymentsInfo[id]
-
-if !ok{
-
-	return
+// 7. Метод просмотра всех машин клуба
+func (g garageModul) allinfocar() map[int]car {
+	return g.mapinfo
 }
 
-info.cancell=true
-
-
-p.PaymentsMethod.cancell[id]
-
-
-p.paymentInfo[id]=info
-
-
-func (p PaymentsModul) info(id int) PaymentInfo{
-
-info,ok:=p.paymentsInfo[id]
-if !ok{
-	return PaymentsInfo{}
-}
+// 8. Метод подсчета общего количества машин в клубе
+func (g garageModul) infogarage() int {
+	return len(g.mapinfo)
 }
 
-
-func (p PaymentsModul) allinfo()map[int]PaymentsInfo {
-
-tempmap:= make(map[int]PaymentsInfo,len(p.paymentsInfo))
-
-for k,v:=range p.paymentsInfo{
-
-	tempMap[k]=v
+func main() {
+	fmt.Println("Тюнинг-клуб успешно спроектирован!")
 }
-
-
-	return p.paymentsInfo
-
-
-
-}
-
